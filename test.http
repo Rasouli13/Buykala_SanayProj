@@ -1,0 +1,55 @@
+@baseUrl = http://localhost:1234
+@contentType = application/json
+
+### ۱. ثبت‌نام کاربر جدید با نقش غرفه‌دار (Vendor)
+# @name registerVendor
+POST {{baseUrl}}/api/users/register
+Content-Type: {{contentType}}
+
+{
+    "phoneNumber": "09123456789",
+    "password": "securePassword123",
+    "role": "VENDOR"
+}
+
+### ۲. ثبت‌نام کاربر جدید با نقش ادمین (Admin)
+# @name registerAdmin
+POST {{baseUrl}}/api/users/register
+Content-Type: {{contentType}}
+
+{
+    "phoneNumber": "09999999999",
+    "password": "adminPassword123",
+    "role": "ADMIN"
+}
+
+
+### ۳. ارسال درخواست ایجاد غرفه توسط کاربر غرفه‌دار
+# توجه: شناسه کاربر (X-User-Id) بر اساس فیلد id تولید شده در درخواست اول باید ست شود (مثلاً 1)
+POST {{baseUrl}}/api/shops
+Content-Type: {{contentType}}
+X-User-Id: 1
+
+{
+    "name": "غرفه دیجیتال کالا",
+    "shabaNumber": "IR123456789012345678901234"
+}
+
+### ۴. تایید غرفه توسط ادمین (تغییر وضعیت به APPROVED)
+# توجه: شناسه غرفه (shopId) بر اساس آی‌دی تولید شده در درخواست سوم ست شود (مثلاً 1)
+PATCH {{baseUrl}}/api/shops/1/status?status=APPROVED
+Content-Type: {{contentType}}
+
+### ۵. رد غرفه توسط ادمین (تغییر وضعیت به REJECTED)
+PATCH {{baseUrl}}/api/shops/1/status?status=REJECTED
+Content-Type: {{contentType}}
+
+###
+GET  {{baseUrl}}/api/users
+Content-Type: {{contentType}}
+
+
+### ۷. دریافت لیست تمامی غرفه‌ها (Shops)
+GET {{baseUrl}}/api/shops/all
+Content-Type: {{contentType}}
+
