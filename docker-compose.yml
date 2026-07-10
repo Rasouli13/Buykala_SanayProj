@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # Database service for buykala application
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: buykala_db
+    environment:
+      POSTGRES_USER: buykala_admin
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: buykala_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - buykala_pgdata:/var/lib/postgresql/data
+
+volumes:
+  # Persistent volume for database storage
+  buykala_pgdata:
