@@ -53,3 +53,38 @@ Content-Type: {{contentType}}
 GET {{baseUrl}}/api/shops/all
 Content-Type: {{contentType}}
 
+
+### ۸. ایجاد دسته‌بندی جدید توسط ادمین
+POST {{baseUrl}}/api/categories
+Content-Type: {{contentType}}
+
+{
+    "name": "کالای دیجیتال"
+}
+
+### ۹. دریافت لیست دسته‌بندی‌ها (برای برداشتم ID دسته‌بندی)
+GET {{baseUrl}}/api/categories
+Content-Type: {{contentType}}
+
+### ۱۰. ایجاد محصول جدید توسط غرفه‌دار
+# توجه ۱: شناسه کاربر غرفه‌دار (X-User-Id) باید هدر داده شود (مثلاً 1)
+# توجه ۲: این غرفه ابتدا باید در مرحله ۴ فاز اول APPROVED شده باشد، در غیر این صورت خطا می‌دهد.
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+X-User-Id: 1
+
+{
+    "name": "گوشی موبایل گلکسی S24",
+    "description": "نسخه ۲۵۶ گیگابایت همراه با گارانتی",
+    "price": 55000000,
+    "stock": 15,
+    "categoryId": 1
+}
+
+### ۱۱. دریافت تمام محصولات فروشگاه
+GET {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+### ۱۲. دریافت محصولات غرفه شماره ۱
+GET {{baseUrl}}/api/products/shop/1
+Content-Type: {{contentType}}
