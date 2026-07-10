@@ -40,7 +40,7 @@ public class ShopController {
         return ResponseEntity.ok(updatedShop);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Shop>> getAllShops() {
         return ResponseEntity.ok(shopService.getAllShops());
     }

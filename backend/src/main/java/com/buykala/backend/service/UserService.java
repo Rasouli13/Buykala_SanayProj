@@ -6,6 +6,7 @@ import com.buykala.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 import java.util.List;
 
 @Service
@@ -16,13 +17,19 @@ public class UserService {
 
     @Transactional
     public User register(RegisterRequest request) {
-        
-        // Check if the phone number is already registered
-        if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
-            throw new RuntimeException("این شماره موبایل قبلاً در سیستم ثبت شده است");
+        Optional<User> existingUser = userRepository.findByPhoneNumber(request.getPhoneNumber());
+
+        // If user already exists, act as a Login mechanism
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (user.getPassword().equals(request.getPassword())) {
+                return user; // Successful Login
+            } else {
+                throw new RuntimeException("رمز عبور وارد شده اشتباه است");
+            }
         }
 
-        //2. Create and save the new user
+        // If user is new, build and register
         User user = User.builder()
                 .phoneNumber(request.getPhoneNumber())
                 .password(request.getPassword())
