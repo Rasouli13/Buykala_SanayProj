@@ -2,15 +2,13 @@ package com.buykala.backend.repository;
 
 import com.buykala.backend.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import java.util.List;
 
-@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // واکشی تمام محصولات یک غرفه خاص (نیازمندی یوزر استوری غرفه‌دار)
+    // Fetch all products for a specific shop (needed for shop owner's story)
     List<Product> findByShopId(Long shopId);
 
-    // واکشی محصولات بر اساس دسته‌بندی (برای استفاده مشتری در فرانت‌آند)
+    // Fetch products by category (for customer use in the frontend)
     List<Product> findByCategoryId(Long categoryId);
 }

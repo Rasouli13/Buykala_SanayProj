@@ -16,15 +16,16 @@ public class UserService {
 
     @Transactional
     public User register(RegisterRequest request) {
-        // ۱. بررسی تکراری نبودن شماره موبایل
+        
+        // Check if the phone number is already registered
         if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
             throw new RuntimeException("این شماره موبایل قبلاً در سیستم ثبت شده است");
         }
 
-        // ۲. ساخت و ذخیره کاربر جدید
+        //2. Create and save the new user
         User user = User.builder()
                 .phoneNumber(request.getPhoneNumber())
-                .password(request.getPassword()) // در فازهای بعدی هَش خواهد شد
+                .password(request.getPassword())
                 .role(request.getRole())
                 .build();
 

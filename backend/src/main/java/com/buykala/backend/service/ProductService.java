@@ -23,7 +23,8 @@ public class ProductService {
 
     @Transactional
     public Product createProduct(CreateProductRequest request, Long userId) {
-        // ۱. واکشی غرفه کاربر و بررسی وضعیت تایید آن
+        
+        // 1.fetch the user's shop and check its approval status
         Shop shop = shopRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("غرفه‌ای برای این کاربر یافت نشد"));
 
@@ -31,11 +32,13 @@ public class ProductService {
             throw new RuntimeException("غرفه شما هنوز توسط ادمین تایید نشده است و امکان ثبت محصول ندارید");
         }
 
-        // ۲. واکشی دسته‌بندی
+        
+        //2. fetch the category
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("دسته‌بندی مورد نظر یافت نشد"));
 
-        // ۳. ساخت و ذخیره محصول
+        
+        //3. create and save the product
         Product product = Product.builder()
                 .name(request.getName())
                 .description(request.getDescription())

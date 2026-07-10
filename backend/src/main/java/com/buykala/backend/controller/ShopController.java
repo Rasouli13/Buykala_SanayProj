@@ -18,7 +18,8 @@ public class ShopController {
 
     private final ShopService shopService;
 
-    // ثبت درخواست غرفه جدید (آی‌دی کاربر موقتاً از هدر گرفته می‌شود)
+    
+    // Create a new shop request (user ID is temporarily taken from the header)
     @PostMapping
     public ResponseEntity<Shop> createShop(
             @Valid @RequestBody CreateShopRequest request,
@@ -28,7 +29,8 @@ public class ShopController {
         return new ResponseEntity<>(shop, HttpStatus.CREATED);
     }
 
-    // تغییر وضعیت غرفه توسط ادمین
+    
+    // Update shop status by admin
     @PatchMapping("/{shopId}/status")
     public ResponseEntity<Shop> updateShopStatus(
             @PathVariable Long shopId,

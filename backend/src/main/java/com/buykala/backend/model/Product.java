@@ -23,10 +23,10 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
-    private BigDecimal price; // استفاده از BigDecimal برای دقت بالا در محاسبات مالی
+    private BigDecimal price;
 
     @Column(nullable = false)
-    private Integer stock; // موجودی انبار کالا
+    private Integer stock;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

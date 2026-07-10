@@ -16,10 +16,10 @@ public class Address {
     private Long id;
 
     @Column(nullable = false)
-    private String title; // نمونه: خانه، محل کار
+    private String title;
 
     @Column(nullable = false)
-    private String addressLine; // متن کامل آدرس
+    private String addressLine; 
 
     @Column(nullable = false)
     private String city;

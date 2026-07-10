@@ -16,8 +16,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
-    // ایجاد محصول توسط غرفه‌دار (تایید وضعیت غرفه درون سرویس چک می‌شود)
+    // Create a new product by the shop owner (shop status is checked within the service)
     @PostMapping
     public ResponseEntity<Product> createProduct(
             @Valid @RequestBody CreateProductRequest request,
@@ -27,13 +26,13 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
-    // دریافت تمام محصولات سایت (برای صفحه اصلی فروشگاه)
+    //get all products for the main shop page
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    // دریافت محصولات یک غرفه خاص
+    //products for a specific shop (for shop owner's story)
     @GetMapping("/shop/{shopId}")
     public ResponseEntity<List<Product>> getProductsByShop(@PathVariable Long shopId) {
         return ResponseEntity.ok(productService.getProductsByShop(shopId));

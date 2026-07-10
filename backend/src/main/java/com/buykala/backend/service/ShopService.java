@@ -20,16 +20,17 @@ public class ShopService {
 
     @Transactional
     public Shop createShop(CreateShopRequest request, Long userId) {
-        // ۱. پیدا کردن کاربر درخواست‌دهنده
+
+        // 1. Find the requesting user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("کاربر یافت نشد"));
 
-        // ۲. بررسی اینکه کاربر از قبل غرفه نداشته باشد
+        // 2. Check if the user already has a shop
         if (shopRepository.findByUserId(userId).isPresent()) {
             throw new RuntimeException("این کاربر در حال حاضر یک غرفه دارد");
         }
 
-        // ۳. ساخت غرفه جدید (وضعیت پیش‌فرض در PrePersist روی PENDING ست می‌شود)
+        // 3. Create a new shop (default status is set to PENDING in PrePersist)
         Shop shop = Shop.builder()
                 .name(request.getName())
                 .shabaNumber(request.getShabaNumber())
@@ -41,7 +42,8 @@ public class ShopService {
 
     @Transactional
     public Shop updateShopStatus(Long shopId, ShopStatus newStatus) {
-        // متد مدیریت ادمین برای تایید یا رد غرفه
+
+        // admin can approve or reject a shop by changing its status
         Shop shop = shopRepository.findById(shopId)
                 .orElseThrow(() -> new RuntimeException("غرفه یافت نشد"));
 

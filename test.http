@@ -88,3 +88,58 @@ Content-Type: {{contentType}}
 ### ۱۲. دریافت محصولات غرفه شماره ۱
 GET {{baseUrl}}/api/products/shop/1
 Content-Type: {{contentType}}
+
+
+### ۱۳. ثبت‌نام یک کاربر جدید به عنوان مشتری (Customer)
+POST {{baseUrl}}/api/users/register
+Content-Type: {{contentType}}
+
+{
+    "phoneNumber": "09111111111",
+    "password": "customerPassword123",
+    "role": "CUSTOMER"
+}
+
+### ۱۴. ثبت آدرس پستی برای مشتری جدید
+# توجه: هدر X-User-Id باید شناسه مشتری ثبت‌شده در مرحله قبل باشد (مثلاً 3)
+POST {{baseUrl}}/api/addresses
+Content-Type: {{contentType}}
+X-User-Id: 3
+
+{
+    "title": "Home Address",
+    "addressLine": "No 42, West Baker St",
+    "city": "Tehran",
+    "postalCode": "1234567890"
+}
+
+### ۱۵. اضافه کردن کالا به سبد خرید توسط مشتری
+# توجه: شناسه محصول (productId) را از خروجی‌های فاز ۲ جایگذاری کنید (مثلاً 1)
+POST {{baseUrl}}/api/cart
+Content-Type: {{contentType}}
+X-User-Id: 3
+
+{
+    "productId": 1,
+    "quantity": 2
+}
+
+### ۱۶. مشاهده اقلام داخل سبد خرید مشتری
+GET {{baseUrl}}/api/cart
+Content-Type: {{contentType}}
+X-User-Id: 3
+
+### ۱۷. نهایی کردن سبد خرید و صدور فاکتور سفارش (Checkout)
+# توجه: شناسه آدرس (addressId) را از مرحله ۱۴ قرار دهید (مثلاً 1)
+POST {{baseUrl}}/api/orders/checkout
+Content-Type: {{contentType}}
+X-User-Id: 3
+
+{
+    "addressId": 1
+}
+
+### ۱۸. تغییر وضعیت سفارش به SHIPPED توسط غرفه‌دار
+# توجه: شناسه سفارش (orderId) را از فاکتور مرحله ۱۷ قرار دهید (مثلاً 1)
+PATCH {{baseUrl}}/api/orders/1/status?status=SHIPPED
+Content-Type: {{contentType}}

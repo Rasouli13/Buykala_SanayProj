@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    // تولید خودکار کوئری: SELECT * FROM users WHERE phone_number = ?
+    //  SELECT * FROM users WHERE phone_number = ?
     Optional<User> findByPhoneNumber(String phoneNumber);
     
 }
